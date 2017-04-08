@@ -3,16 +3,16 @@ import React from "react";
 import { Router, Route, Link, browserHistory } from 'react-router';
 
 import Signup from "../ui/Signup";
-import Links from "../ui/Links";
+import Dashboard from "../ui/Dashboard";
 import NotFound from "../ui/NotFound";
 import Login from "../ui/Login";
 
 const unauthenticatedPages = ["/", "/signup"];
-const authenticatedPages = ["/links"];
+const authenticatedPages = ["/dashboard"];
 
 const onEnterPublicPage = () => {
     if(Meteor.userId()) {
-        browserHistory.replace("/links");
+        browserHistory.replace("/dashboard");
     }
 };
 const onEnterPrivatePage = () => {
@@ -26,7 +26,7 @@ export const onAuthChange = (isAuthenticated) => {
     const isAuthenticatedPage = authenticatedPages.includes(pathname);
 
     if(isUnauthenticatedPage && isAuthenticated) {
-        browserHistory.replace("/links");
+        browserHistory.replace("/dashboard");
     } else if (isAuthenticatedPage && !isAuthenticated) {
         browserHistory.replace("/");
     }
@@ -35,7 +35,7 @@ export const routes = (
     <Router history={browserHistory}>
         <Route path="/" component={Login} onEnter={onEnterPublicPage}/>
         <Route path="/signup" component={Signup} onEnter={onEnterPublicPage}/>
-        <Route path="/links" component={Links} onEnter={onEnterPrivatePage}/>
+        <Route path="/dashboard" component={Dashboard} onEnter={onEnterPrivatePage}/>
         <Route path="*" component={NotFound} onEnter={onEnterPublicPage}/>
     </Router>
 );
