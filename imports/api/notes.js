@@ -28,7 +28,7 @@ Meteor.methods({
                 type: String,
                 min: 1
             }
-        }).validate({_id});
+        }).validate({ _id });
 
         Notes.remove({ _id, userId: this.userId });
     },
@@ -55,11 +55,15 @@ Meteor.methods({
             ...updates
         });
 
-        Notes.update(_id, {
-            $set: {
-                updatedAt: moment().valueOf(),
-                ...updates
-            }
-        });
+        Notes.update({
+            _id,
+            userId: this.userId
+        },
+            {
+                $set: {
+                    updatedAt: moment().valueOf(),
+                    ...updates
+                }
+            });
     }
 });

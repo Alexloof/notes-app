@@ -36,7 +36,7 @@ if (Meteor.isServer) {
             expect(Notes.findOne({ _id: noteOne._id })).toNotExist();
         });
 
-        it("should not remove note if authenticated", function () {
+        it("should not remove note if unauthenticated", function () {
             expect(() => {
                 Meteor.server.method_handlers["notes.remove"].apply({}, [noteOne._id]);
             }).toThrow();
@@ -79,6 +79,32 @@ if (Meteor.isServer) {
                         }
                     ]);
             }).toThrow();
-        })
+        });
+
+        it("should not update not if user was not creator", function () {
+            const title = "this is an updated title";
+            Meteor.server.method_handlers["notes.update"].apply({
+                userId: "testid"
+            }, [
+                    noteOne._id,
+                    { title }
+                ]);
+
+            const note = Notes.findOne(noteOne._id);
+
+            expect(note).toInclude(noteOne);
+        });
+
+        it("should not update note if unauthenticated", function () {
+            expect(() => {
+                Meteor.server.method_handlers["notes.update"].apply({}, [noteOne._id]);
+            }).toThrow();
+        });
+
+        it("should not update note if invalid _id", function () {
+            expect(() => {
+                Meteor.server.method_handlers["notes.update"].apply({ userId: noteOne.userId }, []);
+            }).toThrow();
+        });
     });
 }
