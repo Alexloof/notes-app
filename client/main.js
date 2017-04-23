@@ -15,7 +15,7 @@ Tracker.autorun(() => {
 Tracker.autorun(() => {
     const selectedNoteId = Session.get("selectedNoteId");
 
-    if ("selectedNoteId") {
+    if (selectedNoteId) {
         browserHistory.replace(`/dashboard/${selectedNoteId}`);
     }
 });
