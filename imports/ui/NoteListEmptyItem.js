@@ -1,8 +1,7 @@
 import React from "react";
-import { Meteor } from "meteor/meteor";
-import { createContainer } from "meteor/react-meteor-data";
 
-export const NoteListEmptyItem = () => {
+
+const NoteListEmptyItem = () => {
     return(
         <div>
             <h5>You have no notes</h5>
