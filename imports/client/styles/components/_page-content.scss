@@ -17,6 +17,7 @@
     left: -100vh;
     bottom: 0;
     transition: all 0.3s ease;
+    z-index: 1;
     @include desktop {
         display: flex;
         width: $page-content-sidebar-width;
